@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/bloc/get_movies_by_genre_bloc.dart';
 import 'package:movie_app_flutter/models/movie.dart';
 import 'package:movie_app_flutter/models/movie_response.dart';
+import 'package:movie_app_flutter/screens/detail_screen.dart';
 import 'package:movie_app_flutter/style/colors.dart';
 
 class GenreMovies extends StatefulWidget {
@@ -76,7 +77,13 @@ class _GenreMoviesState extends State<GenreMovies> {
               padding:
                   const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 15.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DetailScreen(movie: movies[index])));
+                },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

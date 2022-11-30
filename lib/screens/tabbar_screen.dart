@@ -10,10 +10,10 @@ class TabbarScreen extends StatefulWidget {
   const TabbarScreen({Key? key}) : super(key: key);
 
   @override
-  _tabbarScreenState createState() => _tabbarScreenState();
+  _TabbarScreenState createState() => _TabbarScreenState();
 }
 
-class _tabbarScreenState extends State<TabbarScreen>
+class _TabbarScreenState extends State<TabbarScreen>
     with TickerProviderStateMixin {
   int activeTabIndex = 1;
   List barItems = [
