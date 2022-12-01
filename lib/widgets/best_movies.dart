@@ -35,7 +35,7 @@ class _BestMoviesState extends State<BestMovies> {
         const SizedBox(
           height: 5.0,
         ),
-        StreamBuilder<MovieResponse>(
+        StreamBuilder(
           stream: moviesBloc.subject.stream,
           builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
             if (snapshot.hasData) {
@@ -96,7 +96,7 @@ class _BestMoviesState extends State<BestMovies> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (movies[index].poster.isEmpty)
+                    if ((movies[index].poster ?? "").isEmpty)
                       Container(
                         width: 120.0,
                         height: 180.0,
@@ -128,7 +128,7 @@ class _BestMoviesState extends State<BestMovies> {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        movies[index].title,
+                        movies[index].title ?? "",
                         maxLines: 2,
                         style: const TextStyle(
                             height: 1.4, color: black, fontSize: 11.0),

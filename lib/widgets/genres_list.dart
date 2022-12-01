@@ -44,6 +44,7 @@ class _GenresListState extends State<GenresList>
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(50.0),
               child: AppBar(
+                elevation: 0,
                 backgroundColor: white,
                 bottom: TabBar(
                   controller: _tabController,
@@ -56,7 +57,7 @@ class _GenresListState extends State<GenresList>
                   tabs: widget.genres.map((Genre genre) {
                     return Container(
                         padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                        child: Text(genre.name.toUpperCase(),
+                        child: Text((genre.name ?? "").toUpperCase(),
                             style: const TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.bold,
@@ -70,7 +71,7 @@ class _GenresListState extends State<GenresList>
               physics: const NeverScrollableScrollPhysics(),
               children: widget.genres.map((Genre genre) {
                 return GenreMovies(
-                  genreId: genre.id,
+                  genreId: genre.id ?? 0,
                 );
               }).toList(),
             ),

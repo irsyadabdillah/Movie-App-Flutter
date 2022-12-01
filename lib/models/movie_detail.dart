@@ -2,13 +2,13 @@ import 'package:movie_app_flutter/models/company.dart';
 import 'package:movie_app_flutter/models/genre.dart';
 
 class MovieDetail {
-  final int id;
-  final bool adult;
-  final int budget;
-  final List<Genre> genres;
-  final List<Company> companies;
-  final String releaseDate;
-  final int runtime;
+  final int? id;
+  final bool? adult;
+  final int? budget;
+  final List<Genre>? genres;
+  final List<Company>? companies;
+  final String? releaseDate;
+  final int? runtime;
 
   MovieDetail(this.id, this.adult, this.budget, this.genres, this.companies,
       this.releaseDate, this.runtime);

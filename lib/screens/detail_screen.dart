@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/bloc/get_movie_videos_bloc.dart';
 import 'package:movie_app_flutter/models/movie.dart';
 import 'package:movie_app_flutter/style/colors.dart';
+import 'package:movie_app_flutter/widgets/cast_info.dart';
+import 'package:movie_app_flutter/widgets/movie_genre_info.dart';
+import 'package:movie_app_flutter/widgets/movie_info.dart';
 
 class DetailScreen extends StatefulWidget {
   final Movie movie;
@@ -15,7 +18,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    MovieVideosBloc().getMovieVideos(widget.movie.id);
+    movieVideosBloc.getMovieVideos(widget.movie.id ?? 0);
   }
 
   @override
@@ -31,19 +34,19 @@ class _DetailScreenState extends State<DetailScreen> {
         slivers: [
           SliverAppBar(
             backgroundColor: white,
-            iconTheme: const IconThemeData(color: black),
+            iconTheme: const IconThemeData(color: maroon),
             elevation: 0,
             expandedHeight: 200.0,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
-                widget.movie.title.length > 40
-                    ? "${widget.movie.title.substring(0, 37)}..."
-                    : widget.movie.title,
+                (widget.movie.title ?? "").length > 40
+                    ? "${widget.movie.title?.substring(0, 37)}..."
+                    : widget.movie.title ?? "",
                 style: const TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.normal,
-                    color: black),
+                    color: maroon),
               ),
               background: Stack(
                 children: [
@@ -55,9 +58,6 @@ class _DetailScreenState extends State<DetailScreen> {
                         image: NetworkImage(
                             "https://image.tmdb.org/t/p/original/${widget.movie.backPoster}"),
                       ),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(color: black.withOpacity(0.5)),
                     ),
                   ),
                   Container(
@@ -88,24 +88,42 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(Icons.star, color: Colors.yellow),
+                    const Icon(Icons.star, color: maroon),
                     Text(
                       widget.movie.rating.toString(),
                       style: const TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.bold,
-                          color: black),
+                          color: maroon),
                     ),
                     Container(
-                      width: 1.0,
+                      width: 1.5,
                       height: 14.0,
                       color: grey,
                       margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                     ),
-                    const Text("Movie Name")
+                    MovieInfo(id: widget.movie.id ?? 0)
                   ],
                 ),
-              )
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 14.0, top: 20.0),
+                child: Text(
+                  "OVERVIEW",
+                  style: TextStyle(
+                      color: grey, fontWeight: FontWeight.w500, fontSize: 12.0),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 14.0, right: 14.0, top: 14.0),
+                child: Text(
+                  widget.movie.overview ?? "",
+                  style: const TextStyle(color: black, fontSize: 12.0),
+                ),
+              ),
+              MovieGenreInfo(id: widget.movie.id ?? 0),
+              CastInfo(id: widget.movie.id ?? 0)
             ])),
           )
         ],

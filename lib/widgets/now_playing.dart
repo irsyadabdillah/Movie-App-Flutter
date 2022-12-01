@@ -25,7 +25,7 @@ class _NowPlayingState extends State<NowPlaying> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<MovieResponse>(
+    return StreamBuilder(
         stream: nowPlayingMoviesBloc.subject.stream,
         builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
           if (snapshot.hasData) {
@@ -88,7 +88,7 @@ class _NowPlayingState extends State<NowPlaying> {
               child: Stack(
                 children: <Widget>[
                   Hero(
-                    tag: movies[index].id,
+                    tag: movies[index].id ?? 0,
                     child: Container(
                       height: 220.0,
                       width: MediaQuery.of(context).size.width,
@@ -139,7 +139,7 @@ class _NowPlayingState extends State<NowPlaying> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              movies[index].title,
+                              movies[index].title ?? "",
                               // ignore: prefer_const_constructors
                               style: TextStyle(
                                   height: 1.5,

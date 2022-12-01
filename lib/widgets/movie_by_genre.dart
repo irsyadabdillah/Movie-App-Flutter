@@ -22,7 +22,7 @@ class _GenreMoviesState extends State<GenreMovies> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<MovieResponse>(
+    return StreamBuilder(
       stream: moviesByGenreBloc.subject.stream,
       builder: ((context, AsyncSnapshot<MovieResponse> snapshot) {
         if (snapshot.hasData) {
@@ -87,7 +87,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (movies[index].poster.isEmpty)
+                    if ((movies[index].poster ?? "").isEmpty)
                       Container(
                         width: 120.0,
                         height: 180.0,
@@ -119,7 +119,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        movies[index].title,
+                        movies[index].title ?? "",
                         maxLines: 2,
                         style: const TextStyle(
                             height: 1.4, color: black, fontSize: 11.0),

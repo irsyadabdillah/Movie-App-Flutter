@@ -1,8 +1,8 @@
 class Company {
   final int id;
-  final String logo;
-  final String name;
-  final String country;
+  final String? logo;
+  final String? name;
+  final String? country;
 
   Company(this.id, this.logo, this.name, this.country);
 
