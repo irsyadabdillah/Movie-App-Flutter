@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/bloc/get_now_playing_bloc.dart';
 import 'package:movie_app_flutter/models/movie_response.dart';
 import 'package:movie_app_flutter/style/colors.dart';
 import 'package:page_indicator/page_indicator.dart';
-
+import 'package:shimmer/shimmer.dart';
 import '../models/movie.dart';
 
 class NowPlaying extends StatefulWidget {
@@ -39,31 +40,23 @@ class _NowPlayingState extends State<NowPlaying> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: 25.0,
-          width: 25.0,
-          child: CircularProgressIndicator(
-            // ignore: prefer_const_constructors, unnecessary_new
-            valueColor: new AlwaysStoppedAnimation<Color>(black),
-            strokeWidth: 4.0,
-          ),
-        )
-      ],
-    ));
+    return SizedBox(
+      height: 220.0,
+      width: MediaQuery.of(context).size.width,
+      child: Shimmer.fromColors(
+        baseColor: grey.withOpacity(0.3),
+        highlightColor: grey.withOpacity(0.1),
+        child: Container(
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 
   Widget _buildErrorWidget(String error) {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("Error occured: $error"),
-      ],
-    ));
+      child: Text("Error occured: $error"),
+    );
   }
 
   Widget _buildSuccessWidget(MovieResponse data) {
@@ -86,19 +79,26 @@ class _NowPlayingState extends State<NowPlaying> {
             return GestureDetector(
               onTap: () {},
               child: Stack(
-                children: <Widget>[
+                children: [
                   Hero(
                     tag: movies[index].id ?? 0,
-                    child: Container(
-                      height: 220.0,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        image: DecorationImage(
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "https://image.tmdb.org/t/p/original/${movies[index].backPoster}",
+                      imageBuilder: (context, imageProvider) => Container(
+                        height: 220.0,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "https://image.tmdb.org/t/p/original/${movies[index].backPoster}")),
+                            image: imageProvider,
+                          ),
+                        ),
                       ),
+                      placeholder: (context, url) => _buildLoadingWidget(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                   const SizedBox(
@@ -133,11 +133,11 @@ class _NowPlayingState extends State<NowPlaying> {
                   Positioned(
                       bottom: 30.0,
                       child: Container(
-                        padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                         width: 250.0,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
+                          children: [
                             Text(
                               movies[index].title ?? "",
                               // ignore: prefer_const_constructors

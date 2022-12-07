@@ -23,6 +23,7 @@ dependencies:
   sliver_fab: ^1.0.0
   youtube_player_flutter: ^8.0.0
   flutter_inappwebview: ^5.4.4+3
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

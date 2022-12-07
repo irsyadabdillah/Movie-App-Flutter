@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/models/genre_response.dart';
 import 'package:movie_app_flutter/style/colors.dart';
+import 'package:shimmer/shimmer.dart';
 import '../bloc/get_genres_bloc.dart';
 import '../models/genre.dart';
 import 'genres_list.dart';
-import 'dart:convert';
 
 class Genres extends StatefulWidget {
   const Genres({super.key});
@@ -26,6 +26,7 @@ class _GenresState extends State<Genres> {
         stream: genresBloc.subject.stream,
         builder: (context, AsyncSnapshot<GenreResponse> snapshot) {
           if (snapshot.hasData) {
+            // return _buildLoadingWidget();
             return _buildSuccessWidget(snapshot.data!);
           } else if (snapshot.hasError) {
             return _buildErrorWidget(snapshot.error as String);
@@ -36,31 +37,81 @@ class _GenresState extends State<Genres> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
         SizedBox(
-          height: 25.0,
-          width: 25.0,
-          child: CircularProgressIndicator(
-            // ignore: prefer_const_constructors, unnecessary_new
-            valueColor: new AlwaysStoppedAnimation<Color>(black),
-            strokeWidth: 4.0,
+          height: 50,
+          child: Shimmer.fromColors(
+            baseColor: grey.withOpacity(0.3),
+            highlightColor: grey.withOpacity(0.1),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(top: 14.0, bottom: 4.0, left: 14.0),
+                  child: Container(
+                    width: 120,
+                    decoration: const BoxDecoration(
+                      color: white,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
-        )
+        ),
+        SizedBox(
+          height: 260.0,
+          child: Shimmer.fromColors(
+            baseColor: grey.withOpacity(0.3),
+            highlightColor: grey.withOpacity(0.1),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10.0, bottom: 10.0, left: 14.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 120.0,
+                        height: 180.0,
+                        decoration: const BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          shape: BoxShape.rectangle,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        width: 120,
+                        height: 14,
+                        decoration: const BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
       ],
-    ));
+    );
   }
 
   Widget _buildErrorWidget(String error) {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("Error occured: $error"),
-      ],
-    ));
+      child: Text("Error occured: $error"),
+    );
   }
 
   Widget _buildSuccessWidget(GenreResponse data) {

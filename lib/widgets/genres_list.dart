@@ -42,7 +42,7 @@ class _GenresListState extends State<GenresList>
           length: widget.genres.length,
           child: Scaffold(
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(50.0),
+              preferredSize: const Size.fromHeight(50.0),
               child: AppBar(
                 elevation: 0,
                 backgroundColor: white,

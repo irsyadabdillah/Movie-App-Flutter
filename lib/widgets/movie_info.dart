@@ -36,12 +36,8 @@ class _MovieInfoState extends State<MovieInfo> {
 
   Widget _buildErrorWidget(String error) {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("Error occured: $error"),
-      ],
-    ));
+      child: Text("Error occured: $error"),
+    );
   }
 
   Widget _buildSuccessWidget(MovieDetailResponse data) {

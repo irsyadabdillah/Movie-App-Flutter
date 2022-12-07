@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: ListView(
-        children: const <Widget>[
+        children: const [
           NowPlaying(),
           Genres(),
           BestMovies(),

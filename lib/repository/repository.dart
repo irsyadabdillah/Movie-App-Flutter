@@ -84,7 +84,7 @@ class Repository {
       return MovieResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
-      return MovieResponse.withError("$error");
+      throw MovieResponse.withError("$error");
     }
   }
 
