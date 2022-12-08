@@ -27,11 +27,17 @@ class _MovieInfoState extends State<MovieInfo> {
       builder: ((context, AsyncSnapshot<MovieDetailResponse> snapshot) {
         if (snapshot.hasData) {
           return _buildSuccessWidget(snapshot.data!);
-        } else {
+        } else if (snapshot.hasError) {
           return _buildErrorWidget(snapshot.error as String);
+        } else {
+          return _buildLoadingWidget();
         }
       }),
     );
+  }
+
+  Widget _buildLoadingWidget() {
+    return Container();
   }
 
   Widget _buildErrorWidget(String error) {

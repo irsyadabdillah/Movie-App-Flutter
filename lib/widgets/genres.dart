@@ -26,7 +26,6 @@ class _GenresState extends State<Genres> {
         stream: genresBloc.subject.stream,
         builder: (context, AsyncSnapshot<GenreResponse> snapshot) {
           if (snapshot.hasData) {
-            // return _buildLoadingWidget();
             return _buildSuccessWidget(snapshot.data!);
           } else if (snapshot.hasError) {
             return _buildErrorWidget(snapshot.error as String);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/models/movie_detail.dart';
 import 'package:movie_app_flutter/style/colors.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../bloc/get_movie_detail_bloc.dart';
 import '../models/movie_detail_response.dart';
@@ -24,23 +25,60 @@ class _MovieGenreInfoState extends State<MovieGenreInfo> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 14.0, right: 14.0, top: 20.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
-          "GENRES",
-          style: TextStyle(
-              color: grey, fontWeight: FontWeight.w500, fontSize: 12.0),
+      child: StreamBuilder(
+        stream: movieDetailBloc.subject.stream,
+        builder: ((context, AsyncSnapshot<MovieDetailResponse> snapshot) {
+          if (snapshot.hasData) {
+            return _buildSuccessWidget(snapshot.data!);
+          } else if (snapshot.hasError) {
+            return _buildErrorWidget(snapshot.error as String);
+          } else {
+            return _buildLoadingWidget();
+          }
+        }),
+      ),
+    );
+  }
+
+  Widget _buildLoadingWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Shimmer.fromColors(
+          baseColor: grey.withOpacity(0.3),
+          highlightColor: grey.withOpacity(0.1),
+          child: Container(
+            width: 70,
+            height: 14,
+            decoration: const BoxDecoration(
+              color: grey,
+              borderRadius: BorderRadius.all(Radius.circular(6.0)),
+            ),
+          ),
         ),
-        StreamBuilder(
-          stream: movieDetailBloc.subject.stream,
-          builder: ((context, AsyncSnapshot<MovieDetailResponse> snapshot) {
-            if (snapshot.hasData) {
-              return _buildSuccessWidget(snapshot.data!);
-            } else {
-              return _buildErrorWidget(snapshot.error as String);
-            }
-          }),
-        )
-      ]),
+        Container(
+          height: 40.0,
+          padding: const EdgeInsets.only(top: 14.0),
+          child: Shimmer.fromColors(
+            baseColor: grey.withOpacity(0.3),
+            highlightColor: grey.withOpacity(0.1),
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 80,
+                    height: 14,
+                    margin: const EdgeInsets.only(right: 10.0),
+                    decoration: const BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  );
+                }),
+          ),
+        ),
+      ],
     );
   }
 
@@ -52,41 +90,47 @@ class _MovieGenreInfoState extends State<MovieGenreInfo> {
 
   Widget _buildSuccessWidget(MovieDetailResponse data) {
     MovieDetail detail = data.movieDetail;
-    if ((detail.genres ?? []).isEmpty) {
-      return Container(
-        margin: const EdgeInsets.only(top: 10.0),
-        child: const Text("No More Genres"),
-      );
-    } else {
-      return Container(
-        height: 40.0,
-        padding: const EdgeInsets.only(top: 14.0),
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: (detail.genres ?? []).length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Container(
-                  padding: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
-                      border: Border.all(
-                          width: 1.0, color: black.withOpacity(0.6))),
-                  child: Text(
-                    (detail.genres![index]).name ?? "",
-                    maxLines: 1,
-                    style: const TextStyle(
-                        height: 1.4,
-                        color: black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 9.0),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text(
+        "GENRES",
+        style:
+            TextStyle(color: grey, fontWeight: FontWeight.w500, fontSize: 12.0),
+      ),
+      if ((detail.genres ?? []).isEmpty)
+        Container(
+          margin: const EdgeInsets.only(top: 10.0),
+          child: const Text("No More Genres"),
+        )
+      else
+        Container(
+          height: 40.0,
+          padding: const EdgeInsets.only(top: 14.0),
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: (detail.genres ?? []).length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5.0)),
+                        border: Border.all(
+                            width: 1.0, color: black.withOpacity(0.6))),
+                    child: Text(
+                      (detail.genres![index]).name ?? "",
+                      maxLines: 1,
+                      style: const TextStyle(
+                          height: 1.4,
+                          color: black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 9.0),
+                    ),
                   ),
-                ),
-              );
-            }),
-      );
-    }
+                );
+              }),
+        )
+    ]);
   }
 }

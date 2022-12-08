@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/bloc/get_movie_videos_bloc.dart';
 import 'package:movie_app_flutter/models/movie.dart';
@@ -50,15 +51,18 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
               background: Stack(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://image.tmdb.org/t/p/original/${widget.movie.backPoster}"),
+                  CachedNetworkImage(
+                    imageUrl:
+                        "https://image.tmdb.org/t/p/original/${widget.movie.backPoster}",
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                            fit: BoxFit.cover, image: imageProvider),
                       ),
                     ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                   Container(
                     decoration: BoxDecoration(

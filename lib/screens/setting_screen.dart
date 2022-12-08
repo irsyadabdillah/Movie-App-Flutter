@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/style/colors.dart';
@@ -34,10 +35,11 @@ class _SettingScreenState extends State<SettingScreen> {
                   const SizedBox(
                     height: 40.0,
                   ),
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://avatars.githubusercontent.com/u/78635608?s=96&v=4"),
-                    radius: 40,
+                  CachedNetworkImage(
+                    imageUrl:
+                        "https://avatars.githubusercontent.com/u/78635608?s=96&v=4",
+                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                        backgroundImage: imageProvider, radius: 40),
                   ),
                   const SizedBox(
                     height: 10.0,
