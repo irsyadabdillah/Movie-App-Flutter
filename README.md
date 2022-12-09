@@ -1,7 +1,7 @@
 A new Flutter project.
 
 # Movie App
- _This repository is sample my project with flutter_
+ _This repository is my sample project with flutter_
 
 ![alt text](https://raw.githubusercontent.com/irsyadabdillah/Movie-App-Flutter/main/assets/images/github-ss.png)
 
