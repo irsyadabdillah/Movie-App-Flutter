@@ -3,7 +3,7 @@ A new Flutter project.
 # movie_app_flutter
  _This repository with Rest API, Room, MVVM, live data and view binding_
 
-![alt text](https://raw.githubusercontent.com/irsyadabdillah/Movie-Apps-with-TMDB-API/master/asset/Movie%20App.png)
+![alt text](https://raw.githubusercontent.com/irsyadabdillah/Movie-App-Flutter/main/assets/images/github-ss.png)
 
 ## Library References
 
