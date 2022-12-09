@@ -1,18 +1,23 @@
-# movie_app_flutter
-
 A new Flutter project.
 
-## Getting Started
+# movie_app_flutter
+ _This repository with Rest API, Room, MVVM, live data and view binding_
 
-This project is a starting point for a Flutter application.
+![alt text](https://raw.githubusercontent.com/irsyadabdillah/Movie-Apps-with-TMDB-API/master/asset/Movie%20App.png)
 
-A few resources to get you started if this is your first Flutter project:
+## Library References
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Bloc
+- Dio
+- Shimmer
+- RxDart
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
 
-read me
+- Home
+- Detail
+- Setting
+
+## Others
+### Rest API
+https://developers.themoviedb.org
