@@ -125,4 +125,20 @@ class Repository {
       return PersonResponse.withError("$error");
     }
   }
+
+  Future<MovieResponse> search(String query) async {
+    var params = {
+      "api_key": apiKey,
+      "language": "en-US",
+      "query": query,
+      "page": 1
+    };
+    try {
+      Response response = await _dio.get(popularUrl, queryParameters: params);
+      return MovieResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      throw MovieResponse.withError("$error");
+    }
+  }
 }

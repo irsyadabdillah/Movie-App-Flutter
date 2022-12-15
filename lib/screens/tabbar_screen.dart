@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/screens/home_screen.dart';
+import 'package:movie_app_flutter/screens/search_screen.dart';
 import 'package:movie_app_flutter/screens/setting_screen.dart';
 import 'package:movie_app_flutter/style/colors.dart';
 import 'package:movie_app_flutter/widgets/tabbar_item.dart';
@@ -19,10 +20,7 @@ class _TabbarScreenState extends State<TabbarScreen>
   List barItems = [
     {
       "icon": "assets/icons/search.svg",
-      "page": Container(
-        alignment: Alignment.center,
-        child: Text("Search"),
-      ),
+      "page": SearchScreen(),
     },
     {
       "icon": "assets/icons/home.svg",
