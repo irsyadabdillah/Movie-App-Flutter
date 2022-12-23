@@ -11,6 +11,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final _controller = TextEditingController();
+  String queryParams = "";
 
   @override
   Widget build(BuildContext context) {
@@ -24,46 +25,59 @@ class _SearchScreenState extends State<SearchScreen> {
           style: TextStyle(color: black),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.only(right: 24.0, left: 24.0),
-        child: TextField(
-          controller: _controller,
-          textInputAction: TextInputAction.search,
-          onChanged: (text) {
-            setState(() {});
-          },
-          onSubmitted: (value) {
-            SearchMovie(query: value);
-          },
-          cursorColor: maroon,
-          decoration: InputDecoration(
-              hintText: "Search Movie",
-              hintStyle: TextStyle(color: grey.withOpacity(0.5)),
-              prefixIcon: const Icon(
-                Icons.search_outlined,
-                color: grey,
-              ),
-              suffixIcon: _controller.text.isNotEmpty
-                  ? IconButton(
-                      onPressed: () {
-                        _controller.clear();
-                        setState(() {});
-                      },
-                      icon: const Icon(Icons.clear, color: grey))
-                  : null,
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: maroon, width: 1.0, style: BorderStyle.solid),
-                borderRadius: BorderRadius.all(Radius.circular(24.0)),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: maroon, width: 1.0, style: BorderStyle.solid),
-                borderRadius: BorderRadius.all(Radius.circular(24.0)),
-              ),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0)),
-        ),
+      // body: const SearchMovie(query: "avatar"),
+      body: ListView(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(right: 24.0, left: 24.0),
+            child: TextField(
+              controller: _controller,
+              textInputAction: TextInputAction.search,
+              onChanged: (text) {
+                setState(() {});
+              },
+              onSubmitted: (value) {
+                setState(() {
+                  queryParams = value;
+                });
+              },
+              cursorColor: maroon,
+              decoration: InputDecoration(
+                  hintText: "Search Movie",
+                  hintStyle: TextStyle(color: grey.withOpacity(0.5)),
+                  prefixIcon: const Icon(
+                    Icons.search_outlined,
+                    color: grey,
+                  ),
+                  suffixIcon: _controller.text.isNotEmpty
+                      ? IconButton(
+                          onPressed: () {
+                            _controller.clear();
+                            setState(() {
+                              queryParams = "";
+                            });
+                          },
+                          icon: const Icon(Icons.clear, color: grey))
+                      : null,
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: maroon, width: 1.0, style: BorderStyle.solid),
+                    borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: maroon, width: 1.0, style: BorderStyle.solid),
+                    borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 16.0)),
+            ),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          if (queryParams.isNotEmpty) SearchMovie(query: queryParams)
+        ],
       ),
     );
   }

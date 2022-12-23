@@ -6,9 +6,10 @@ class Movie {
   final String? poster;
   final String? overview;
   final num? rating;
+  final String? releaseDate;
 
   Movie(this.id, this.popularity, this.title, this.backPoster, this.poster,
-      this.overview, this.rating);
+      this.overview, this.rating, this.releaseDate);
 
   Movie.fromJson(Map<String, dynamic> json)
       : id = json["id"],
@@ -17,5 +18,6 @@ class Movie {
         backPoster = json["backdrop_path"],
         poster = json["poster_path"],
         overview = json["overview"],
-        rating = json["vote_average"].toDouble();
+        rating = json["vote_average"].toDouble(),
+        releaseDate = json["release_date"];
 }

@@ -54,10 +54,6 @@ class _TabbarScreenState extends State<TabbarScreen>
     super.dispose();
   }
 
-  animatedPage(page) {
-    return FadeTransition(child: page, opacity: _animation);
-  }
-
   void onPageChanged(int index) {
     if (index == activeTabIndex) return;
     _controller.reset();
@@ -80,7 +76,9 @@ class _TabbarScreenState extends State<TabbarScreen>
     return IndexedStack(
       index: activeTabIndex,
       children: List.generate(
-          barItems.length, (index) => animatedPage(barItems[index]["page"])),
+          barItems.length,
+          (index) => FadeTransition(
+              child: barItems[index]["page"], opacity: _animation)),
     );
   }
 

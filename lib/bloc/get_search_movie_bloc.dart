@@ -9,7 +9,7 @@ class SearchMovieBloc {
   final BehaviorSubject<MovieResponse> _subject =
       BehaviorSubject<MovieResponse>();
 
-  getCasts(String query) async {
+  getSearchMovie(String query) async {
     MovieResponse response = await _repository.getSearchMovie(query);
     _subject.sink.add(response);
   }
