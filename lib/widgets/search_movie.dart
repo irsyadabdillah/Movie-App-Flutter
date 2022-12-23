@@ -17,6 +17,12 @@ class SearchMovie extends StatefulWidget {
 
 class _SearchMovieState extends State<SearchMovie> {
   @override
+  void initState() {
+    super.initState();
+    searchMovieBloc.getSearchMovie(widget.query);
+  }
+
+  @override
   void didUpdateWidget(covariant SearchMovie oldWidget) {
     super.didUpdateWidget(oldWidget);
     searchMovieBloc.getSearchMovie(widget.query);

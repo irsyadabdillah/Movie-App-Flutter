@@ -25,7 +25,6 @@ class _SearchScreenState extends State<SearchScreen> {
           style: TextStyle(color: black),
         ),
       ),
-      // body: const SearchMovie(query: "avatar"),
       body: ListView(
         children: [
           Container(
